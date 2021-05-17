@@ -18,7 +18,7 @@ app.use(cors());
 
 app.post('/lipanampesa', (req, res) => {
         if (req.body.Body.stkCallback.ResultCode === 0) {
-            io.sockets.emit('metaData',req.body.Body.stkCallback.CallbackMetadata.Item)
+            io.sockets.emit('metaData',req.body.Body.stkCallback)
             console.log(req.body.Body.stkCallback.CallbackMetadata.Item)
             console.log(`KSH${req.body.Body.stkCallback.CallbackMetadata.Item[0].Value} received from ${req.body.Body.stkCallback.CallbackMetadata.Item[3].Value}`)
         }
