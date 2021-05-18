@@ -23,6 +23,7 @@ app.post('/lipanampesa', (req, res) => {
             console.log(`KSH${req.body.Body.stkCallback.CallbackMetadata.Item[0].Value} received from ${req.body.Body.stkCallback.CallbackMetadata.Item[3].Value}`)
         }
         else{
+            io.sockets.emit('metaData',req.body.Body.stkCallback)
             console.log(req.body.Body)
         } 
     
