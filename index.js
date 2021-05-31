@@ -16,21 +16,22 @@ const io = socketio(server,{
 app.use(express.json())
 app.use(cors());
 
-app.post('/lipanampesa', (req, res) => {
+
+
+io.on('connection',socket=>{
+    console.log('new Connection', socket.id)
+    app.post('/lipanampesa', (req, res) => {
         if (req.body.Body.stkCallback.ResultCode === 0) {
-            io.sockets.emit('metaData',req.body.Body.stkCallback)
+            io.emit('metaData',req.body.Body.stkCallback)
             console.log(req.body.Body.stkCallback.CallbackMetadata.Item)
             console.log(`KSH${req.body.Body.stkCallback.CallbackMetadata.Item[0].Value} received from ${req.body.Body.stkCallback.CallbackMetadata.Item[3].Value}`)
         }
         else{
-            io.sockets.emit('metaData',req.body.Body.stkCallback)
+            io.emit('metaData',req.body.Body.stkCallback)
             console.log(req.body.Body)
         } 
     
 })
-
-io.on('connection',socket=>{
-    console.log('new Connection')
 })
 
 
