@@ -5,9 +5,9 @@ const cors = require('cors')
 
 const app = express();
 const server = http.createServer(app)
-const io = socketio(server,{
-    cors:{
-        origins:["*"]
+const io = socketio(server, {
+    cors: {
+        origins: ["*"]
     }
 })
 
@@ -18,21 +18,27 @@ app.use(cors());
 
 
 
-io.on('connection',socket=>{
+io.on('connection', socket => {
     console.log('new Connection', socket.id)
-    app.post('/lipanampesa', (req, res) => {
+    app.post('/lipanamobile', (req, res) => {
         if (req.body.Body.stkCallback.ResultCode === 0) {
-            io.emit('metaData',req.body.Body.stkCallback)
+            io.emit('metaData', req.body.Body.stkCallback)
             console.log(req.body.Body.stkCallback.CallbackMetadata.Item)
-            console.log(`KSH${req.body.Body.stkCallback.CallbackMetadata.Item[0].Value} received from ${req.body.Body.stkCallback.CallbackMetadata.Item[3].Value}`)
+            
         }
-        else{
-            io.emit('metaData',req.body.Body.stkCallback)
+        else {
+            io.emit('metaData', req.body.Body.stkCallback)
             console.log(req.body.Body)
-        } 
-    
-})
+        }
+
+    })
+    app.post('/ResultURL',(req,res)=>{
+        console.log(req.body)
+    })
+    app.post('/QueueTimeOutURL',(req,res)=>{
+        console.log(req.body)
+    })
 })
 
 
-server.listen('4000',()=>console.log('SERVER UP ON PORT 4000'))
+server.listen('4000', () => console.log('SERVER UP ON PORT 4000'))
