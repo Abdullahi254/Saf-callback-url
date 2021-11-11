@@ -21,21 +21,12 @@ app.use(cors());
 io.on('connection', socket => {
     console.log('new Connection', socket.id)
     app.post('/lipanamobile', (req, res) => {
-        if (req.body.Body.stkCallback.ResultCode === 0) {
-            io.emit('metaData', req.body.Body.stkCallback)
-            console.log(req.body.Body.stkCallback.CallbackMetadata.Item)
-            
-        }
-        else {
-            io.emit('metaData', req.body.Body.stkCallback)
-            console.log(req.body.Body)
-        }
-
+        socket.emit('metaData', req.body.Body.stkCallback)
     })
-    app.post('/ResultURL',(req,res)=>{
+    app.post('/ResultURL', (req, res) => {
         console.log(req.body)
     })
-    app.post('/QueueTimeOutURL',(req,res)=>{
+    app.post('/QueueTimeOutURL', (req, res) => {
         console.log(req.body)
     })
 })
